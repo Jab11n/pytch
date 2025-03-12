@@ -2,6 +2,7 @@ print("Welcome to Pytch: a Python-based command line interface for Hatch.")
 
 import requests
 import time
+import datetime
 
 running = True
 token = None
@@ -9,7 +10,7 @@ token = None
 APIurl = 'https://api.hatch.lol/'
 
 def handleCommand(command):
-    commands = ['help', 'login', 'logout', 'user', 'exit']
+    commands = ['help', 'login', 'logout', 'user', 'project', 'exit']
     global token
     global running
     if command not in commands:
@@ -42,6 +43,16 @@ def handleCommand(command):
         else:
             return [result]
     elif command == commands[4]:
+        success, result = getProjectInfo()
+        if success:
+            return [
+                "Title: " + result.get('title'),
+                "Description: " + result.get('description').replace('\n', '    '),
+                "Revision: " + str(result.get('version')) + ", Rating: " + result.get('rating'),
+                "Uploaded: " + str(datetime.datetime.fromtimestamp(result.get('uploadTs'))),
+                "Comment Count: " + str(result.get('commentCount'))
+            ]
+    elif command == commands[5]:
         token = None
         running = False
         return ['Goodbye.']
@@ -81,6 +92,16 @@ def getUserInfo():
         return True, data
     else:
         return False, f"Command failed ({user.status_code})"
+
+def getProjectInfo():
+    projectEndpoint = 'https://api.hatch.lol/projects/'
+    projectId = input("Project ID: ")
+    project = requests.get(projectEndpoint + projectId)
+    if project.status_code == 200:
+        data = project.json()
+        return True, data
+    else:
+        return False, f"Command failed ({project.status_code})"
 
 initialStart = time.time()
 initialResponse = requests.get(APIurl)

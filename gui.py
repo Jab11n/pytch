@@ -41,16 +41,23 @@ style = ttk.Style()
 #style.configure('TButton', font=('Arial', 12), background='#ffbd59', foreground='black')
 #style.configure('TLabel', background='#f0f0f0', font=('Arial', 12))
 
-title_label = ttk.Label(window, text="Hatch Login", font=("Arial", 16)).pack(pady=10)
+title_label = ttk.Label(window, text="Hatch Login", font=("Arial", 16))
+title_label.pack(pady=10)
 
-uname_label = ttk.Label(window, text="Username:").pack()
-uentry = ttk.Entry(window, width=40).pack(pady=5)
+uname_label = ttk.Label(window, text="Username:")
+uname_label.pack()
+uentry = ttk.Entry(window, width=40)
+uentry.pack(pady=5)
 
-passwd_label = ttk.Label(window, text="Password:").pack()
-pentry = ttk.Entry(window, width=40, show="*").pack(pady=5)
+passwd_label = ttk.Label(window, text="Password:")
+passwd_label.pack()
+pentry = ttk.Entry(window, width=40, show="*")
+pentry.pack(pady=5)
 
-get_button = ttk.Button(window, text="Log In", command=login).pack(pady=20)
+get_button = ttk.Button(window, text="Log In", command=login)
+get_button.pack(pady=20)
 
-label = ttk.Label(window, text="").pack(pady=10)
+label = ttk.Label(window, text="")
+label.pack(pady=10)
 
 window.mainloop()

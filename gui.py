@@ -21,7 +21,7 @@ def login():
             "displayname": getme.json()["displayName"],
             "userid": getme.json()["id"]
         }
-        with open('data.json', 'w') as json_file:
+        with open('pytch-data.json', 'w') as json_file:
             json.dump(logindata, json_file, indent=4)
         label.config(text=f"Successfully logged in as {uname}!")
     else:
@@ -32,7 +32,10 @@ window.title("Hatch")
 window.geometry(f'400x300+{int(window.winfo_screenwidth()/2 - 400 / 2)}+{int(window.winfo_screenheight()/2 - 300 / 2)}')
 window.configure(bg="#f0f0f0")
 window.resizable(False, False)
-window.iconbitmap('./resources/hatch.ico')
+try:
+    window.iconbitmap('./resources/hatch.ico')
+except:
+    print('Couldn\'t locate icon.')
 
 style = ttk.Style()
 #style.configure('TButton', font=('Arial', 12), background='#ffbd59', foreground='black')

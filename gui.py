@@ -67,13 +67,13 @@ def get_project(project_id):
     response = requests.get(f"https://api.hatch.lol/projects/{project_id}")
     if response.status_code == 200:
         project_data = response.json()
-        project_html = f"<h1>{project_data['title']}</h1><p>{project_data['description']}</p><iframe src='https://warp.algebrahelp.org/embed.html?project_url=https://api.hatch.lol/projects/{project_id}/content' style='width: 100%; height: 380px;' frameborder=0'></iframe>"
-        projectembed.set_html(project_html)
+        projecttitle.config(text=project_data["title"])
+        projectdesc.config(text=project_data["description"])
     else:
         projectembed.set_html("<p>Failed to load project.</p>")
 
 def update_screen():
-    global current_screen, screens, window, uentry, pentry, label, projectembed, me
+    global current_screen, screens, window, uentry, pentry, label, projecttitle, projectdesc, me
     for widget in window.winfo_children():
         widget.destroy()
 
@@ -98,7 +98,7 @@ def update_screen():
         label.pack(pady=10)
 
     elif current_screen == screens[1]: #home
-        home_label = ttk.Label(window, text=f"Welcome back, {me[1]}!", font=("Arial", 16))
+        home_label = ttk.Label(window, text=f"Welcome back, {me[1]}", font=("Arial", 16))
         home_label.pack(pady=10)
 
         user_button = ttk.Button(window, text="User", command=lambda: switch_screen('user'))
@@ -129,8 +129,10 @@ def update_screen():
         projectgobutton = ttk.Button(window, text="Load Project", command=lambda: get_project(projectid.get()))
         projectgobutton.pack(pady=5)
 
-        projectembed = HTMLLabel(window, html="<p>Hatch Project</p>")
-        projectembed.pack(pady=10)
+        projecttitle = ttk.Label(window, text="", font=("Arial", 16))
+        projecttitle.pack(pady=10)
+        projectdesc = ttk.Label(window, text="")
+        projectdesc.pack(pady=5)
 
 window = tk.Tk()
 window.title("Hatch")

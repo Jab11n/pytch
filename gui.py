@@ -70,7 +70,7 @@ def get_project(project_id):
         projecttitle.config(text=project_data["title"])
         projectdesc.config(text=project_data["description"])
     else:
-        projectembed.set_html("<p>Failed to load project.</p>")
+        projecttitle.config(text="Failed to load project.")
 
 def update_screen():
     global current_screen, screens, window, uentry, pentry, label, projecttitle, projectdesc, me
